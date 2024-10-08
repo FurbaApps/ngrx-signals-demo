@@ -10,4 +10,9 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'ngrx-signals-demo';
+  protected counter = 0;
+
+  ngOnInit(): void {
+    setInterval(() => this.counter++, 1000);
+  }
 }
