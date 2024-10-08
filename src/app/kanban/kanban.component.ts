@@ -1,8 +1,9 @@
-import { Component, inject, ViewEncapsulation } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { Component, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { Card } from './models/card.model';
-import { Kanban } from './models/kanban.model';
+import { MatButtonModule } from '@angular/material/button';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 import {
   CdkDrag,
   CdkDragDrop,
@@ -11,6 +12,9 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
+
+import { Card } from './models/card.model';
+import { Kanban } from './models/kanban.model';
 import { CardsStore } from './cards.store';
 
 @Component({
@@ -19,6 +23,8 @@ import { CardsStore } from './cards.store';
   imports: [
     MatCardModule,
     MatButtonModule,
+    MatBadgeModule,
+    MatTooltipModule,
     CdkDrag,
     CdkDropList,
     CdkDropListGroup,

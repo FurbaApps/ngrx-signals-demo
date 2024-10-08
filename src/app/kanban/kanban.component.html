@@ -1,7 +1,18 @@
 <div class="cols-container" cdkDropListGroup>
   @for(column of store.columns(); track column; let columnIndex = $index) {
   <div class="col">
-    <h5 class="mat-headline">{{ column.title }}</h5>
+    <h5
+      class="mat-headline"
+      [matBadge]="store.countByColumn()[columnIndex]"
+      [matTooltip]="
+        store.countByColumn()[columnIndex] +
+        ' of ' +
+        store.cardsCount() +
+        ' total cards'
+      "
+    >
+      {{ column.title }}
+    </h5>
     <div
       class="cards-container"
       cdkDropList
