@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import {
@@ -9,13 +10,12 @@ import {
   CdkDragDrop,
   CdkDropList,
   CdkDropListGroup,
-  moveItemInArray,
-  transferArrayItem,
 } from '@angular/cdk/drag-drop';
 
-import { Card } from './models/card.model';
-import { Kanban } from './models/kanban.model';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { AddCardDialogComponent } from './add-card-dialog/add-card-dialog.component';
 import { CardsStore } from './cards.store';
+import { Kanban } from './models/kanban.model';
 
 @Component({
   selector: 'app-kanban',
@@ -25,6 +25,8 @@ import { CardsStore } from './cards.store';
     MatButtonModule,
     MatBadgeModule,
     MatTooltipModule,
+    MatIconModule,
+    MatDialogModule,
     CdkDrag,
     CdkDropList,
     CdkDropListGroup,
@@ -34,6 +36,7 @@ import { CardsStore } from './cards.store';
   styleUrl: './kanban.component.scss',
 })
 export class KanbanComponent {
+  private readonly dialog = inject(MatDialog);
   protected readonly store = inject(CardsStore);
 
   protected kanban: Kanban = {
@@ -72,5 +75,19 @@ export class KanbanComponent {
 
   protected delete(columnIndex: number, cardIndex: number): void {
     this.store.deleteCard(columnIndex, cardIndex);
+  }
+
+  protected add(): void {
+    const dialogRef = this.dialog.open(AddCardDialogComponent, {
+      height: '400px',
+      width: '600px',
+      data: this.store.columns(),
+    });
+
+    dialogRef
+      .afterClosed()
+      .subscribe(
+        (data) => data && this.store.addCard(data.columnIndex, data.content)
+      );
   }
 }

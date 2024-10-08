@@ -1,8 +1,5 @@
-import { Card } from './card.model';
+import { Column } from './column.model';
 
 export interface Kanban {
-  columns: {
-    title: string;
-    cards: Card[];
-  }[];
+  columns: Column[];
 }

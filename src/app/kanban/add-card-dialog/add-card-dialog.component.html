@@ -1,0 +1,34 @@
+<h2 mat-dialog-title>Add a new card</h2>
+<mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Column</mat-label>
+    <mat-select #taskType>
+      @for (column of columns; track column; let index = $index) {
+      <mat-option [value]="index">{{ column.title }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Task description</mat-label>
+    <textarea
+      matInput
+      required="true"
+      #taskContent
+      placeholder="Task description"
+      rows="8"
+    ></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button
+    mat-button
+    [disabled]="!taskContent.validity.valid || taskType.value === undefined"
+    [mat-dialog-close]="{
+      columnIndex: taskType.value,
+      content: taskContent.value
+    }"
+  >
+    Add
+  </button>
+</mat-dialog-actions>

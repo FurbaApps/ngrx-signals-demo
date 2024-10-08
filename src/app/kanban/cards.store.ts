@@ -1,13 +1,13 @@
-import { computed } from '@angular/core';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { computed } from '@angular/core';
 
+import { updateState, withDevtools } from '@angular-architects/ngrx-toolkit';
 import {
   signalStore,
   withComputed,
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { updateState, withDevtools } from '@angular-architects/ngrx-toolkit';
 import { Kanban } from './models/kanban.model';
 
 const initialState: Kanban = {
@@ -71,6 +71,13 @@ export const CardsStore = signalStore(
     deleteCard(columnIndex: number, cardIndex: number): void {
       updateState(store, 'Delete card', ({ columns }) => {
         columns[columnIndex].cards.splice(cardIndex, 1);
+
+        return { columns: [...columns] };
+      });
+    },
+    addCard(columnIndex: number, content: string): void {
+      updateState(store, 'Add card', ({ columns }) => {
+        columns[columnIndex].cards.push({ content });
 
         return { columns: [...columns] };
       });
