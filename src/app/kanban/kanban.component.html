@@ -1,0 +1,24 @@
+<div class="cols-container" cdkDropListGroup>
+  @for(column of kanban.columns; track column; let columnIndex = $index) {
+  <div class="col">
+    <h5 class="mat-headline">{{ column.title }}</h5>
+    <div
+      class="cards-container"
+      cdkDropList
+      [cdkDropListData]="column.cards"
+      (cdkDropListDropped)="drop($event)"
+    >
+      @for(card of column.cards; track card; let cardIndex = $index) {
+      <mat-card appearance="outlined" cdkDrag [cdkDragData]="card">
+        <mat-card-content>{{ card.content }}</mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button (click)="delete(columnIndex, cardIndex)">
+            Delete
+          </button>
+        </mat-card-actions>
+      </mat-card>
+      }
+    </div>
+  </div>
+  }
+</div>

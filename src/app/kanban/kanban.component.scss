@@ -1,0 +1,31 @@
+.cols-container {
+  display: flex;
+  gap: 24px;
+  padding: 48px;
+
+  .col {
+    flex-grow: 1;
+    flex-basis: 0;
+    background-color: #fafafa;
+    border-radius: 12px;
+    padding: 16px;
+
+    .cards-container {
+      display: flex;
+      flex-flow: column;
+      gap: 8px;
+      min-height: 400px;
+      border-radius: 12px;
+      padding: 8px;
+
+      &.cdk-drop-list-receiving,
+      &.cdk-drop-list-dragging {
+        background-color: #d4ebff;
+      }
+
+      .cdk-drag-placeholder {
+        opacity: 0;
+      }
+    }
+  }
+}
