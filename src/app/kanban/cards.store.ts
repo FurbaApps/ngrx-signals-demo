@@ -1,5 +1,6 @@
 import { computed } from '@angular/core';
-import { Kanban } from './models/kanban.model';
+import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+
 import {
   patchState,
   signalStore,
@@ -7,7 +8,8 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { updateState, withDevtools } from '@angular-architects/ngrx-toolkit';
+import { Kanban } from './models/kanban.model';
 
 const initialState: Kanban = {
   columns: [
@@ -27,6 +29,7 @@ const initialState: Kanban = {
 };
 
 export const CardsStore = signalStore(
+  withDevtools('kanban'),
   withState(initialState),
   withComputed(({ columns }) => ({
     cardsCount: computed(() =>
@@ -42,7 +45,8 @@ export const CardsStore = signalStore(
       fromIndex: number,
       toIndex: number
     ): void {
-      patchState(store, ({ columns }) => {
+      // wrapper around patchState with action name added
+      updateState(store, 'Move card in column', ({ columns }) => {
         moveItemInArray(columns[columnIndex].cards, fromIndex, toIndex);
         return { columns };
       });
@@ -53,7 +57,7 @@ export const CardsStore = signalStore(
       fromIndex: number,
       toIndex: number
     ): void {
-      patchState(store, ({ columns }) => {
+      updateState(store, 'Move card between columns', ({ columns }) => {
         transferArrayItem(
           columns[previousColumnIndex].cards,
           columns[currentColumnIndex].cards,
@@ -64,7 +68,7 @@ export const CardsStore = signalStore(
       });
     },
     deleteCard(columnIndex: number, cardIndex: number): void {
-      patchState(store, ({ columns }) => {
+      updateState(store, 'Delete card', ({ columns }) => {
         columns[columnIndex].cards.splice(cardIndex, 1);
 
         return { columns };
