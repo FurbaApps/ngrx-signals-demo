@@ -48,7 +48,8 @@ export const CardsStore = signalStore(
       // wrapper around patchState with action name added
       updateState(store, 'Move card in column', ({ columns }) => {
         moveItemInArray(columns[columnIndex].cards, fromIndex, toIndex);
-        return { columns };
+
+        return { columns: [...columns] };
       });
     },
     moveCardBetweenColumns(
@@ -64,14 +65,15 @@ export const CardsStore = signalStore(
           fromIndex,
           toIndex
         );
-        return { columns };
+
+        return { columns: [...columns] };
       });
     },
     deleteCard(columnIndex: number, cardIndex: number): void {
       updateState(store, 'Delete card', ({ columns }) => {
         columns[columnIndex].cards.splice(cardIndex, 1);
 
-        return { columns };
+        return { columns: [...columns] };
       });
     },
   }))
