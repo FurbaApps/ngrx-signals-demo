@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Card } from './models/card.model';
@@ -11,6 +11,7 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
+import { CardsStore } from './cards.store';
 
 @Component({
   selector: 'app-kanban',
@@ -22,10 +23,13 @@ import {
     CdkDropList,
     CdkDropListGroup,
   ],
+  providers: [CardsStore],
   templateUrl: './kanban.component.html',
   styleUrl: './kanban.component.scss',
 })
 export class KanbanComponent {
+  protected readonly store = inject(CardsStore);
+
   protected kanban: Kanban = {
     columns: [
       {
