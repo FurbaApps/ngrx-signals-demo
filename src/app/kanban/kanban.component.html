@@ -16,7 +16,7 @@
     <div
       class="cards-container"
       cdkDropList
-      [cdkDropListData]="column.cards"
+      [cdkDropListData]="{ columnIndex }"
       (cdkDropListDropped)="drop($event)"
     >
       @for(card of column.cards; track card; let cardIndex = $index) {

@@ -53,18 +53,17 @@ export class KanbanComponent {
     ],
   };
 
-  protected drop(event: CdkDragDrop<Card[]>): void {
-    console.log('Drop', event);
+  protected drop(event: CdkDragDrop<{ columnIndex: number }>): void {
     if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
+      this.store.moveCardInColumn(
+        event.container.data.columnIndex,
         event.previousIndex,
         event.currentIndex
       );
     } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
+      this.store.moveCardBetweenColumns(
+        event.previousContainer.data.columnIndex,
+        event.container.data.columnIndex,
         event.previousIndex,
         event.currentIndex
       );
@@ -72,6 +71,6 @@ export class KanbanComponent {
   }
 
   protected delete(columnIndex: number, cardIndex: number): void {
-    this.kanban.columns[columnIndex].cards.splice(cardIndex, 1);
+    this.store.deleteCard(columnIndex, cardIndex);
   }
 }
