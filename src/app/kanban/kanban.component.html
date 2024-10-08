@@ -1,5 +1,5 @@
 <div class="cols-container" cdkDropListGroup>
-  @for(column of kanban.columns; track column; let columnIndex = $index) {
+  @for(column of store.columns(); track column; let columnIndex = $index) {
   <div class="col">
     <h5 class="mat-headline">{{ column.title }}</h5>
     <div

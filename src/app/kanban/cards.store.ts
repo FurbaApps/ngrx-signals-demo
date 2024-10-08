@@ -1,5 +1,6 @@
+import { computed } from '@angular/core';
 import { Kanban } from './models/kanban.model';
-import { signalStore, withState } from '@ngrx/signals';
+import { signalStore, withComputed, withState } from '@ngrx/signals';
 
 const initialState: Kanban = {
   columns: [
@@ -18,4 +19,14 @@ const initialState: Kanban = {
   ],
 };
 
-export const CardsStore = signalStore(withState(initialState));
+export const CardsStore = signalStore(
+  withState(initialState),
+  withComputed(({ columns }) => ({
+    cardsCount: computed(() =>
+      columns().reduce((total, column) => total + column.cards.length, 0)
+    ),
+    countByColumn: computed(() =>
+      columns().map((column) => column.cards.length)
+    ),
+  }))
+);
