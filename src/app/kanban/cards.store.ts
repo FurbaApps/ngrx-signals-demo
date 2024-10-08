@@ -2,7 +2,6 @@ import { computed } from '@angular/core';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 import {
-  patchState,
   signalStore,
   withComputed,
   withMethods,
