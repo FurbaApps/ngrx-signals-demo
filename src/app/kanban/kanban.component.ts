@@ -15,7 +15,6 @@ import {
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddCardDialogComponent } from './add-card-dialog/add-card-dialog.component';
 import { CardsStore } from './cards.store';
-import { Kanban } from './models/kanban.model';
 
 @Component({
   selector: 'app-kanban',
@@ -38,23 +37,6 @@ import { Kanban } from './models/kanban.model';
 export class KanbanComponent {
   private readonly dialog = inject(MatDialog);
   protected readonly store = inject(CardsStore);
-
-  protected kanban: Kanban = {
-    columns: [
-      {
-        title: 'Backlog',
-        cards: [{ content: 'Karta testowa' }, { content: 'Jakaś inna karta' }],
-      },
-      {
-        title: 'Work in progress',
-        cards: [{ content: 'test' }],
-      },
-      {
-        title: 'Done',
-        cards: [],
-      },
-    ],
-  };
 
   protected drop(event: CdkDragDrop<{ columnIndex: number }>): void {
     if (event.previousContainer === event.container) {
